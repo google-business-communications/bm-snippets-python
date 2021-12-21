@@ -12,26 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This code sends a text message to the user with a Live agent request suggestion
-# that allows the user to connect with a Live agent.
-# Read more: https://developers.google.com/business-communications/business-messages/guides/how-to/message/send?hl=en#live_agent_request_suggestion
+"""Sends a text message to the user with a Live agent request suggestion.
 
-# This code is based on the https://github.com/google-business-communications/python-businessmessages
-# Python Business Messages client library.
+It allows the user to connect with a Live agent.
+Read more: https://developers.google.com/business-communications/business-messages/guides/how-to/message/send?hl=en#live_agent_request_suggestion
+
+This code is based on the https://github.com/google-business-communications/python-businessmessages
+Python Business Messages client library.
+"""
+
+import uuid
+
+from businessmessages import businessmessages_v1_client as bm_client
+from businessmessages.businessmessages_v1_messages import BusinessmessagesConversationsMessagesCreateRequest
+from businessmessages.businessmessages_v1_messages import BusinessMessagesLiveAgentRequest
+from businessmessages.businessmessages_v1_messages import BusinessMessagesMessage
+from businessmessages.businessmessages_v1_messages import BusinessMessagesRepresentative
+from businessmessages.businessmessages_v1_messages import BusinessMessagesSuggestion
+from oauth2client.service_account import ServiceAccountCredentials
 
 # Edit the values below:
 path_to_service_account_key = './service_account_key.json'
 conversation_id = 'EDIT_HERE'
-
-import json
-import uuid
-
-from businessmessages import businessmessages_v1_client as bm_client
-from businessmessages.businessmessages_v1_messages import (
-    BusinessmessagesConversationsMessagesCreateRequest,
-    BusinessMessagesLiveAgentRequest, BusinessMessagesMessage,
-    BusinessMessagesRepresentative, BusinessMessagesSuggestion)
-from oauth2client.service_account import ServiceAccountCredentials
 
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
     path_to_service_account_key,
@@ -43,7 +45,7 @@ client = bm_client.BusinessmessagesV1(credentials=credentials)
 # Follow instructions at https://developers.google.com/business-communications/business-messages/guides/how-to/message/send?hl=en#live_agent_request_suggestion
 message = BusinessMessagesMessage(
     messageId=str(uuid.uuid4().int),
-    representative=BusinessMessagesRepresentative( # Must be sent from a BOT representative
+    representative=BusinessMessagesRepresentative(  # Must be sent from a BOT representative
         representativeType=BusinessMessagesRepresentative.RepresentativeTypeValueValuesEnum.BOT
     ),
     text='Would you like to chat with a live agent?',

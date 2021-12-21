@@ -12,26 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This code sends an image to the user with a fallback text.
-# Read more: https://developers.google.com/business-communications/business-messages/guides/how-to/message/send?hl=en#images
+"""This code sends an image to the user with a fallback text.
 
-# This code is based on the https://github.com/google-business-communications/python-businessmessages
-# Python Business Messages client library.
+Read more: https://developers.google.com/business-communications/business-messages/guides/how-to/message/send?hl=en#images
+
+This code is based on the https://github.com/google-business-communications/python-businessmessages
+Python Business Messages client library.
+"""
+
+import uuid
+
+from businessmessages import businessmessages_v1_client as bm_client
+from businessmessages.businessmessages_v1_messages import BusinessMessagesContentInfo
+from businessmessages.businessmessages_v1_messages import BusinessmessagesConversationsMessagesCreateRequest
+from businessmessages.businessmessages_v1_messages import BusinessMessagesImage
+from businessmessages.businessmessages_v1_messages import BusinessMessagesMessage
+from businessmessages.businessmessages_v1_messages import BusinessMessagesRepresentative
+from oauth2client.service_account import ServiceAccountCredentials
 
 # Edit the values below:
 path_to_service_account_key = './service_account_key.json'
 conversation_id = 'EDIT_HERE'
 image_file_url = 'EDIT_HERE'
-
-import json
-import uuid
-
-from businessmessages import businessmessages_v1_client as bm_client
-from businessmessages.businessmessages_v1_messages import (
-    BusinessMessagesCardContent, BusinessMessagesContentInfo,
-    BusinessmessagesConversationsMessagesCreateRequest, BusinessMessagesImage,
-    BusinessMessagesMessage, BusinessMessagesRepresentative)
-from oauth2client.service_account import ServiceAccountCredentials
 
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
     path_to_service_account_key,
@@ -39,20 +41,20 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name(
 
 client = bm_client.BusinessmessagesV1(credentials=credentials)
 
-representativeTypeAsString = 'BOT'
-if representativeTypeAsString == 'BOT':
-    representativeType = BusinessMessagesRepresentative.RepresentativeTypeValueValuesEnum.BOT
+representative_type_as_string = 'BOT'
+if representative_type_as_string == 'BOT':
+  representative_type = BusinessMessagesRepresentative.RepresentativeTypeValueValuesEnum.BOT
 else:
-    representativeType = BusinessMessagesRepresentative.RepresentativeTypeValueValuesEnum.HUMAN
+  representative_type = BusinessMessagesRepresentative.RepresentativeTypeValueValuesEnum.HUMAN
 
 # Create an image message with fallback text
 message = BusinessMessagesMessage(
     messageId=str(uuid.uuid4().int),
     representative=BusinessMessagesRepresentative(
-        representativeType=representativeType
+        representativeType=representative_type
     ),
     fallback='Hello, world!\nAn image has been sent with Business Messages.',
-    image = BusinessMessagesImage(
+    image=BusinessMessagesImage(
         contentInfo=BusinessMessagesContentInfo(
             altText='Alternative text',
             fileUrl=image_file_url,
