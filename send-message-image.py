@@ -45,7 +45,7 @@ if representativeTypeAsString == 'BOT':
 else:
     representativeType = BusinessMessagesRepresentative.RepresentativeTypeValueValuesEnum.HUMAN
 
-# Create an Image message
+# Create an image message with fallback text
 message = BusinessMessagesMessage(
     messageId=str(uuid.uuid4().int),
     representative=BusinessMessagesRepresentative(

@@ -46,7 +46,7 @@ if representativeTypeAsString == 'BOT':
 else:
     representativeType = BusinessMessagesRepresentative.RepresentativeTypeValueValuesEnum.HUMAN
 
-# Create a rich card message with two suggested replies
+# Create a rich card message with two suggested replies and fallback text
 message = BusinessMessagesMessage(
     messageId=str(uuid.uuid4().int),
     representative=BusinessMessagesRepresentative(

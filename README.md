@@ -44,7 +44,7 @@ Python 3.5, 3.6 and 3.7, and 3.8 are fully supported and tested.
 
 1. Locate the file with the code snippet you want to execute.
 1. Replace all the values of the variables on top of the file that are set to `EDIT_HERE`.
-1. Make sure the path to your [service account key](https://developers.google.com/business-communications/business-messages/guides/quickstarts/prerequisite-setup?hl=en#create_a_service_account) is correct. The scripts use a default path as `./service_account_key.json`.
+1. Make sure the path to your [service account key](https://developers.google.com/business-communications/business-messages/guides/quickstarts/prerequisite-setup?hl=en#create_a_service_account) is correct. The scripts use the path `./service_account_key.json`.
 1. On your terminal, run `python file-name-to-be-executed.py`
 
 ## Learn more

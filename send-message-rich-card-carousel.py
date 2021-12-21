@@ -48,6 +48,7 @@ else:
     representativeType = BusinessMessagesRepresentative.RepresentativeTypeValueValuesEnum.HUMAN
 
 # Create a carousel message with two cards and a suggested reply for each card
+# and fallback text
 message = BusinessMessagesMessage(
     messageId=str(uuid.uuid4().int),
     representative=BusinessMessagesRepresentative(

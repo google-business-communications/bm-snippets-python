@@ -39,7 +39,8 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name(
 
 client = bm_client.BusinessmessagesV1(credentials=credentials)
 
-# Create a text message with a live agent request action
+# Create a text message with a live agent request action and fallback text
+# Follow instructions at https://developers.google.com/business-communications/business-messages/guides/how-to/message/send?hl=en#live_agent_request_suggestion
 message = BusinessMessagesMessage(
     messageId=str(uuid.uuid4().int),
     representative=BusinessMessagesRepresentative( # Must be sent from a BOT representative

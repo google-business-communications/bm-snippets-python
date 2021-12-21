@@ -46,7 +46,7 @@ if representativeTypeAsString == 'BOT':
 else:
     representativeType = BusinessMessagesRepresentative.RepresentativeTypeValueValuesEnum.HUMAN
 
-# Create a text message with a dial action
+# Create a text message with a dial action and fallback text
 message = BusinessMessagesMessage(
     messageId=str(uuid.uuid4().int),
     representative=BusinessMessagesRepresentative(
