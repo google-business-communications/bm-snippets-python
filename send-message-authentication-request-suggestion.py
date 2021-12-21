@@ -12,12 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This code sends a text message to the user with an authentication request suggestion
-# that allows the user to authenticate with OAuth. It also has a fallback text.
-# Read more: https://developers.google.com/business-communications/business-messages/guides/how-to/message/send?hl=en#authentication-request-suggestion
+"""Sends a text message to the user with an authentication request suggestion.
 
-# This code is based on the https://github.com/google-business-communications/python-businessmessages
-# Python Business Messages client library.
+It allows the user to authenticate with OAuth and has a fallback text.
+Read more: https://developers.google.com/business-communications/business-messages/guides/how-to/message/send?hl=en#authentication-request-suggestion
+
+This code is based on the https://github.com/google-business-communications/python-businessmessages
+Python Business Messages client library.
+"""
+
+import uuid
+
+from businessmessages import businessmessages_v1_client as bm_client
+from businessmessages.businessmessages_v1_messages import BusinessMessagesAuthenticationRequest
+from businessmessages.businessmessages_v1_messages import BusinessMessagesAuthenticationRequestOauth
+from businessmessages.businessmessages_v1_messages import BusinessmessagesConversationsMessagesCreateRequest
+from businessmessages.businessmessages_v1_messages import BusinessMessagesMessage
+from businessmessages.businessmessages_v1_messages import BusinessMessagesRepresentative
+from businessmessages.businessmessages_v1_messages import BusinessMessagesSuggestion
+from oauth2client.service_account import ServiceAccountCredentials
 
 # Before continuing, learn more about the prerequisites for authenticating
 # with OAuth at: https://developers.google.com/business-communications/business-messages/guides/how-to/integrate/oauth?hl=en
@@ -29,35 +42,23 @@ oauth_client_id = 'EDIT_HERE'
 oauth_code_challenge = 'EDIT_HERE'
 oauth_scope = 'EDIT_HERE'
 
-import json
-import uuid
-
-from businessmessages import businessmessages_v1_client as bm_client
-from businessmessages.businessmessages_v1_messages import (
-    BusinessMessagesAuthenticationRequest,
-    BusinessMessagesAuthenticationRequestOauth,
-    BusinessmessagesConversationsMessagesCreateRequest,
-    BusinessMessagesMessage, BusinessMessagesRepresentative,
-    BusinessMessagesSuggestion)
-from oauth2client.service_account import ServiceAccountCredentials
-
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
     path_to_service_account_key,
     scopes=['https://www.googleapis.com/auth/businessmessages'])
 
 client = bm_client.BusinessmessagesV1(credentials=credentials)
 
-representativeTypeAsString = 'BOT'
-if representativeTypeAsString == 'BOT':
-    representativeType = BusinessMessagesRepresentative.RepresentativeTypeValueValuesEnum.BOT
+representative_type_as_string = 'BOT'
+if representative_type_as_string == 'BOT':
+  representative_type = BusinessMessagesRepresentative.RepresentativeTypeValueValuesEnum.BOT
 else:
-    representativeType = BusinessMessagesRepresentative.RepresentativeTypeValueValuesEnum.HUMAN
+  representative_type = BusinessMessagesRepresentative.RepresentativeTypeValueValuesEnum.HUMAN
 
 # Create a text message with an authentication request
 message = BusinessMessagesMessage(
     messageId=str(uuid.uuid4().int),
     representative=BusinessMessagesRepresentative(
-        representativeType=representativeType
+        representativeType=representative_type
     ),
     text='Sign in to continue the conversation.',
     fallback='Visit support.growingtreebank.com to continue.',

@@ -12,23 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This code sends a survey to the user:
-# Read more: https://developers.google.com/business-communications/business-messages/guides/how-to/message/surveys?hl=en
+"""This code sends a survey to the user.
 
-# This code is based on the https://github.com/google-business-communications/python-businessmessages
-# Python Business Messages client library.
+Read more: https://developers.google.com/business-communications/business-messages/guides/how-to/message/surveys?hl=en
+
+This code is based on the https://github.com/google-business-communications/python-businessmessages
+Python Business Messages client library.
+"""
+
+import uuid
+
+from businessmessages import businessmessages_v1_client as bm_client
+from businessmessages.businessmessages_v1_messages import BusinessmessagesConversationsSurveysCreateRequest
+from businessmessages.businessmessages_v1_messages import BusinessMessagesSurvey
+from oauth2client.service_account import ServiceAccountCredentials
 
 # Edit the values below:
 path_to_service_account_key = './service_account_key.json'
 conversation_id = 'EDIT_HERE'
-
-import json
-import uuid
-
-from businessmessages import businessmessages_v1_client as bm_client
-from businessmessages.businessmessages_v1_messages import (
-    BusinessmessagesConversationsSurveysCreateRequest, BusinessMessagesSurvey)
-from oauth2client.service_account import ServiceAccountCredentials
 
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
     path_to_service_account_key,
